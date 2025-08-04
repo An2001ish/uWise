@@ -1,5 +1,10 @@
-import { AudioWaveform } from "lucide-react"
+'use client';
+
+import { AudioWaveform, X, Menu } from "lucide-react"
 import Link from "next/link"
+import { ThemeToggle } from "./theme-toggle"
+import { SignInButton } from "./auth/sign-in-button"
+import { useState } from "react"
 
 export function Header() {
 
@@ -7,6 +12,8 @@ export function Header() {
         {label: "Features", href: "/features"},
         {label: "About uWise", href: "/about"},
     ]
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return <div className="w-full fixed top-0 z-50 bg-background/95 backdrop-blur">
         <div className="absolute inset-0 border-b border-primary/10"></div>
@@ -44,13 +51,40 @@ export function Header() {
                         
                     </nav>    
                     <div className="flex items-center gap-3">
-                       {/* <ThemeToggle/>
-                       <SignInButton/> */}
-                       
+                       <ThemeToggle/>
+                       <SignInButton/>
+                       <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        {isMenuOpen? (
+                            <X className="h-5 w-5"/>
+                        ):(
+                            <Menu className="h-5 w-5"/>
+                        )}
+                       </button>                       
                     </div>
                 </div>
 
             </div>
         </header>
+        {isMenuOpen && (
+            <div className="md:hidden border-t border-primary/10">
+                
+                    <nav className="flex flex-col space-y-1 py-4">
+                        {navItems.map((item) => {
+                            return(
+                                <Link
+                                key = {item.href}
+                                href = {item.href}
+                                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors relative group"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                            {item.label}
+                            
+                            </Link>
+                            )
+                        })}
+                    </nav>
+                
+            </div>
+        )}
     </div>
 }
