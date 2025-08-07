@@ -3,8 +3,9 @@
 import { Ripple } from "@/components/magicui/ripple";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Waves } from "lucide-react";
-import { Slider } from "@radix-ui/react-slider";
+import { ArrowRight, Waves } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const emotions = [
@@ -32,13 +33,12 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <section className="relative min-h-[90vh] mt-20 flex flex-col items-center justify-center py-12 px-4">
-        {/* <div className="absolute inset-0 z-10 overflow-hidden"> */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div
             className={`absolute w-[500px] h-[500px] rounded-full blur-3xl top-0 -left-20 transition-all duration-700 ease-in-out bg-gradient-to-r ${currentEmotion?.color} to-transparent opacity-60`}
           ></div>
         </div>
-        <div className="absolute w-[400px] h-[400px] rounded-full bg-seconday/10 blur-3xl bottom-0 right-0 animate-pulse delay-700">
+        <div className="absolute w-[400px] h-[400px] rounded-full bg-secondary/10 blur-3xl bottom-0 right-0 animate-pulse delay-700">
           <div className="absolute inset-0 bg-background/80 backdrop-blur-3xl"></div>
         </div>
         <Ripple className="opacity-60" />
@@ -50,7 +50,7 @@ export default function Home() {
         >
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm border border-primary/20 bg-primary/5 backdrop-blur-sm hover:border-primary/40 transition-all duration-300">
             <Waves className="w-4 h-4 animate-wave text-primary" />
-            <span className="relative text-foreground/90 dark:text-foreground after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary/30 after:scale-x-0 after:hover:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+            <span className="relative text-foreground/90 dark:text-foreground">
               Your AI Agent Mental Health Companion
             </span>
           </div>
@@ -67,6 +67,7 @@ export default function Home() {
             uWise is an AI-powered mental health companion that helps you manage
             your mental health and find peace of mind.
           </p>
+
           <motion.div
             className="w-full max-w-[600px] mx-auto space-y-6 py-8"
             initial={{ opacity: 0, y: 20 }}
@@ -89,7 +90,7 @@ export default function Home() {
                     }`}
                     onClick={() => setEmotion(em.value)}
                   >
-                    <div className="text-2xl transform-gpu ">
+                    <div className="text-2xl transform-gpu">
                       {em.label.split(" ")[0]}
                     </div>
                     <div className="text-xs text-muted-foreground mt-1 font-medium">
@@ -99,7 +100,8 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            {/* slider */}
+
+            {/* Slider */}
             <div className="relative px-2">
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${currentEmotion.color} to-transparent blur-2xl -z-10 transition-all duration-500`}
@@ -113,6 +115,26 @@ export default function Home() {
                 className="py-4"
               />
             </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground animate-pulse">
+                How are you feeling today?
+              </p>
+            </div>
+          </motion.div>
+          <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          >
+          <Button
+          size="lg"
+          className="relative gropu h-12 px-8 rounded-full bg-gradient-to-r from-primary via-primary/90 to-secondary hover:to-primary shadow-lg shadow-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/30">
+            <span className="relative z-10 font-medium flex items-center gap-2">
+              Get Started
+              <ArrowRight className="w-4 h-4 group-hover:transition-transform duration-300" />
+            </span>
+          </Button>
           </motion.div>
         </motion.div>
       </section>
