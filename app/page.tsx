@@ -4,6 +4,7 @@ import { Ripple } from "@/components/magicui/ripple";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Waves } from "lucide-react";
+import { Slider } from "@radix-ui/react-slider";
 
 export default function Home() {
   const emotions = [
@@ -21,14 +22,18 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  const currentEmotion = emotions.find(
-    (em) => Math.abs(emotion - em.value) < 15 || emotions[2]
-  );
+  useEffect(() => {
+    console.log(emotion);
+  }, [emotion]);
+
+  const currentEmotion =
+    emotions.find((em) => Math.abs(emotion - em.value) < 15) || emotions[2];
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <section className="relative min-h-[90vh] mt-20 flex flex-col items-center justify-center py-12 px-4">
-        <div className="absolute inset-0 z-10 overflow-hidden">
+        {/* <div className="absolute inset-0 z-10 overflow-hidden"> */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <div
             className={`absolute w-[500px] h-[500px] rounded-full blur-3xl top-0 -left-20 transition-all duration-700 ease-in-out bg-gradient-to-r ${currentEmotion?.color} to-transparent opacity-60`}
           ></div>
@@ -58,6 +63,57 @@ export default function Home() {
               of Mind
             </span>
           </h1>
+          <p className="max-w-[600px] mx-auto text-base md:text-lg text-muted-foreground leading-relaxed tracking-wide">
+            uWise is an AI-powered mental health companion that helps you manage
+            your mental health and find peace of mind.
+          </p>
+          <motion.div
+            className="w-full max-w-[600px] mx-auto space-y-6 py-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <div className="space-y-10 text-center">
+              <p className="text-sm text-muted-foreground/80 font-medium">
+                Whatever you&apos;re going through, we&apos;re here to help.
+              </p>
+
+              <div className="flex justify-between items-center px-2">
+                {emotions.map((em) => (
+                  <div
+                    key={em.value}
+                    className={`transition-all duration-500 ease-out cursor-pointer hover:scale-105 ${
+                      Math.abs(emotion - em.value) < 15
+                        ? "opacity-100 scale-110 transform-gpu"
+                        : "opacity-50 scale-100"
+                    }`}
+                    onClick={() => setEmotion(em.value)}
+                  >
+                    <div className="text-2xl transform-gpu ">
+                      {em.label.split(" ")[0]}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 font-medium">
+                      {em.label.split(" ")[1]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* slider */}
+            <div className="relative px-2">
+              <div
+                className={`absolute inset-0 bg-gradient-to-r ${currentEmotion.color} to-transparent blur-2xl -z-10 transition-all duration-500`}
+              />
+              <Slider
+                value={[emotion]}
+                onValueChange={(value) => setEmotion(value[0])}
+                min={0}
+                max={100}
+                step={1}
+                className="py-4"
+              />
+            </div>
+          </motion.div>
         </motion.div>
       </section>
     </div>
