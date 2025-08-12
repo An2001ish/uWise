@@ -14,6 +14,7 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
+
   if (!mounted) {
     return (
       <Button variant="ghost" size="icon" aria-label="Toggle theme" disabled>
