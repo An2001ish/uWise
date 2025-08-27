@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Container } from "@/components/ui/container";
 import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
 
 export default function DashboardPage() {
   const [currenttime, setCurrentTime] = useState(new Date());
@@ -36,7 +37,12 @@ export default function DashboardPage() {
           </motion.div>
         </div>
         <div className="spave-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                <Card className="border-primary/10 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-transparent"></div>
+
+                </Card>
+              </div>
         </div>
       </Container>
     </div>
