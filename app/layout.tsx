@@ -17,9 +17,6 @@ const geistMono = Geist_Mono({
 });
 
 
-        <Footer/>
-      </Providers>
-      </body>
-    </html>
+        
   );
 }
