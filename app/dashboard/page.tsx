@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
+  Brain,
+  Trophy,
+  Activity,
   Sparkles,
   BrainCircuit,
   Heart,
@@ -21,10 +24,45 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@/components/ui/dialog";
+import { AnxietyGames } from "@/components/games/anxiety-games";
 
 export default function DashboardPage() {
   const [currenttime, setCurrentTime] = useState<Date | null>(null);
   const [showMoodModal  , setShowMoodModal] = useState(false);
+  const wellnessStats = [
+    {
+      title: "Mood Score",
+      value: "7/10",
+      icon: Brain,
+      color: "text-purple-500",
+      bgColor: "bg-purple-500/10",
+      description: "Today's average mood",
+    },
+    {
+      title: "Completion Rate",
+      value: "100%",
+      icon: Trophy,
+      color: "text-yellow-500",
+      bgColor: "bg-yellow-500/10",
+      description: "Perfect completion rate",
+    },
+    {
+      title: "Therapy Sessions",
+      value: "3",
+      icon: Heart,
+      color: "text-rose-500",
+      bgColor: "bg-rose-500/10",
+      description: "Total sessions completed",
+    },
+    {
+      title: "Total Activities",
+      value: "5",
+      icon: Activity,
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
+      description: "Planned for today",
+    },
+  ];
 
   useEffect(() => {
     // set immediately on mount
@@ -37,6 +75,8 @@ export default function DashboardPage() {
 
     return () => clearInterval(interval);
   }, []);
+
+  
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -169,6 +209,7 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="gird grid-cols-2 gap-3">
                   {wellnessStats.map((stat) => {
+                    return(
                     <div
                       key={stat.title}
                       className={cn(
@@ -186,7 +227,7 @@ export default function DashboardPage() {
                           {stat.description}
                         </p>
                       </div>
-                    </div>;
+                    </div>)
                   })}
                 </div>
               </CardContent>
@@ -194,7 +235,7 @@ export default function DashboardPage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:cols-span-3 space-y-6">
-
+                    <AnxietyGames/>
             </div>
           </div>
         </div>
