@@ -3,13 +3,28 @@
 import { useEffect, useState } from "react";
 import { Container } from "@/components/ui/container";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Sparkles, BrainCircuit, Heart, MessageSquare, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  BrainCircuit,
+  Heart,
+  MessageSquare,
+  ArrowRight,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@/components/ui/dialog";
 
 export default function DashboardPage() {
   const [currenttime, setCurrentTime] = useState<Date | null>(null);
+  const [showMoodModal  , setShowMoodModal] = useState(false);
 
   useEffect(() => {
     // set immediately on mount
@@ -73,7 +88,7 @@ export default function DashboardPage() {
                       className={cn(
                         "w-full justify-between items-center p-6 h-auto group/button",
                         "bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90",
-                        "transition-all duration-200 group-hover:translate-y-[-2px]"
+                        "transition-all duration-200 group-hover:translate-y-[-2px]",
                       )}
                       onClick={() => {}}
                     >
@@ -99,9 +114,9 @@ export default function DashboardPage() {
                       <Button
                         variant="outline"
                         className={cn(
-                          "flex flex-col h-[120px] px-4 py-3 group/mood hover:border-primary/50",
+                          "flex flex-col h-[120px] px-4 py-3 group/mood hover:border-primary/10",
                           "justify-center items-center text-center",
-                          "transition-all duration-200 group-hover:translate-y-[-2px]"
+                          "transition-all duration-200 group-hover:translate-y-[-2px]",
                         )}
                         onClick={() => {}}
                       >
@@ -121,7 +136,7 @@ export default function DashboardPage() {
                         className={cn(
                           "flex flex-col h-[120px] px-4 py-3 group/ai hover:border-primary/50",
                           "justify-center items-center text-center",
-                          "transition-all duration-200 group-hover:translate-y-[-2px]"
+                          "transition-all duration-200 group-hover:translate-y-[-2px]",
                         )}
                         onClick={() => {}}
                       >
@@ -140,9 +155,61 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
+
+            <Card className="border-primary/10">
+              <CardHeader>
+                <div>
+                  <CardTitle>Today's Overview</CardTitle>
+                  <CardDescription>
+                    Your wellness metrics for {""}
+                    {format(new Date(), "MMMM d, yyyy")}
+                  </CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="gird grid-cols-2 gap-3">
+                  {wellnessStats.map((stat) => {
+                    <div
+                      key={stat.title}
+                      className={cn(
+                        "p-4 rounded-lg transition-all duration-200 hover:scale-[1.02]",
+                        stat.bgColor,
+                      )}
+                    >
+                      <div className="flex items-center gap-2">
+                        <stat.icon
+                          className={cn("w-5 h-5", stat.color)}
+                        ></stat.icon>
+                        <p className="text-sm font-medium">{stat.title}</p>
+                        <p className="text-2xl font-bold mt-2">{stat.value}</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {stat.description}
+                        </p>
+                      </div>
+                    </div>;
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:cols-span-3 space-y-6">
+
+            </div>
           </div>
         </div>
       </Container>
+      <Dialog open = {showMoodModal} onOpenChange={setShowMoodModal}>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>
+                        <DialogDescription>
+                          Move the slider to track your current mood.
+                        </DialogDescription>
+                      </DialogTitle>
+                    </DialogHeader>
+                  </DialogContent>
+      </Dialog>
     </div>
   );
 }
