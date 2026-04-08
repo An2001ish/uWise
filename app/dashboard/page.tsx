@@ -198,6 +198,8 @@ export default function DashboardPage() {
 
             <Card className="border-primary/10">
               <CardHeader>
+            
+
                 <div>
                   <CardTitle>Today's Overview</CardTitle>
                   <CardDescription>
@@ -205,9 +207,11 @@ export default function DashboardPage() {
                     {format(new Date(), "MMMM d, yyyy")}
                   </CardDescription>
                 </div>
+                 
               </CardHeader>
               <CardContent>
-                <div className="gird grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3">
+                
                   {wellnessStats.map((stat) => {
                     return(
                     <div
