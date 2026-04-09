@@ -23,12 +23,21 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { AnxietyGames } from "@/components/games/anxiety-games";
+import { MoodForm } from "@/components/mood/mood-form";
 
 export default function DashboardPage() {
   const [currenttime, setCurrentTime] = useState<Date | null>(null);
-  const [showMoodModal  , setShowMoodModal] = useState(false);
+  const [showMoodModal, setShowMoodModal] = useState(false);
+  const [isSavingMood, setIsSavingMood] = useState(false);
+
   const wellnessStats = [
     {
       title: "Mood Score",
@@ -76,7 +85,16 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  
+  const handleMoobSubmit = async ({ moodScore: number }) => {
+    setIsSavingMood(true);
+    try {
+      setShowMoodModal(false);
+    } catch (error) {
+      console.log("Error saving mood:", error);
+    } finally {
+      setIsSavingMood(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -158,7 +176,7 @@ export default function DashboardPage() {
                           "justify-center items-center text-center",
                           "transition-all duration-200 group-hover:translate-y-[-2px]",
                         )}
-                        onClick={() => {}}
+                        onClick={() => setShowMoodModal(true)}
                       >
                         <div className="w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center mb-2">
                           <Heart className="w-5 h-5 text-rose-500" />
@@ -198,8 +216,6 @@ export default function DashboardPage() {
 
             <Card className="border-primary/10">
               <CardHeader>
-            
-
                 <div>
                   <CardTitle>Today's Overview</CardTitle>
                   <CardDescription>
@@ -207,31 +223,32 @@ export default function DashboardPage() {
                     {format(new Date(), "MMMM d, yyyy")}
                   </CardDescription>
                 </div>
-                 
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-3">
-                
                   {wellnessStats.map((stat) => {
-                    return(
-                    <div
-                      key={stat.title}
-                      className={cn(
-                        "p-4 rounded-lg transition-all duration-200 hover:scale-[1.02]",
-                        stat.bgColor,
-                      )}
-                    >
-                      <div className="flex items-center gap-2">
-                        <stat.icon
-                          className={cn("w-5 h-5", stat.color)}
-                        ></stat.icon>
-                        <p className="text-sm font-medium">{stat.title}</p>
-                        <p className="text-2xl font-bold mt-2">{stat.value}</p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {stat.description}
-                        </p>
+                    return (
+                      <div
+                        key={stat.title}
+                        className={cn(
+                          "p-4 rounded-lg transition-all duration-200 hover:scale-[1.02]",
+                          stat.bgColor,
+                        )}
+                      >
+                        <div className="flex items-center gap-2">
+                          <stat.icon
+                            className={cn("w-5 h-5", stat.color)}
+                          ></stat.icon>
+                          <p className="text-sm font-medium">{stat.title}</p>
+                          <p className="text-2xl font-bold mt-2">
+                            {stat.value}
+                          </p>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {stat.description}
+                          </p>
+                        </div>
                       </div>
-                    </div>)
+                    );
                   })}
                 </div>
               </CardContent>
@@ -239,21 +256,22 @@ export default function DashboardPage() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:cols-span-3 space-y-6">
-                    <AnxietyGames/>
+              <AnxietyGames />
             </div>
           </div>
         </div>
       </Container>
-      <Dialog open = {showMoodModal} onOpenChange={setShowMoodModal}>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>
-                        <DialogDescription>
-                          Move the slider to track your current mood.
-                        </DialogDescription>
-                      </DialogTitle>
-                    </DialogHeader>
-                  </DialogContent>
+      <Dialog open={showMoodModal} onOpenChange={setShowMoodModal}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>
+              <DialogDescription>
+                Move the slider to track your current mood.
+              </DialogDescription>
+            </DialogTitle>
+          </DialogHeader>
+          <MoodForm onSubmit={handleMoobSubmit} isLoading={isSavingMood} />
+        </DialogContent>
       </Dialog>
     </div>
   );
