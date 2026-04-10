@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* 1. Basics & Paths */
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* 2. The "Bridge" (CRITICAL for Express) */
+    "esModuleInterop": true,         // Allows 'import' to work with 'require' modules
+    "allowSyntheticDefaultImports": true, 
+    "forceConsistentCasingInFileNames": true,
+
+    /* 3. Type Checking */
+    "strict": true,
+    "skipLibCheck": true,            // Speeds up build by skipping .d.ts checking
+    "noImplicitAny": true,
+
+    /* 4. Development Helpers */
+    "sourceMap": true,               // Helps you debug the original .ts code
+    "moduleDetection": "force"
+  },
+  "include": ["src/**/*"],           // Tells TS to only look inside your src folder
+  "exclude": ["node_modules"]
+}
