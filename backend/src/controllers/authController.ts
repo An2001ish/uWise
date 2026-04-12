@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/Users";
-import { Session, Session } from "../models/Session";
+import { Session } from "../models/Session";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
