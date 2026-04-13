@@ -3,14 +3,13 @@ import { GoogleGenAI } from "@google/genai";
 import { logger } from "../utils/logger";
 
 const genAI = new GoogleGenAI({
-  apiKey:
-    process.env.GEMINI_API_KEY || "AIzaSyCV2PkGsprMRM2mr3in3IFDgPbLhtjesH8",
+  apiKey: process.env.GEMINI_API_KEY || "AIzaSyCV2PkGsprMRM2mr3in3IFDgPbLhtjesH8",
 });
 
 export const processChatMessage = inngest.createFunction(
   {
     id: "process-chat-message",
-    triggers: [{ event: "therapy/session.message" }],
+    trigger: "therapy/session.message",
   },
   async ({ event, step }) => {
     try {
@@ -174,7 +173,7 @@ export const processChatMessage = inngest.createFunction(
 export const analyzeTherapySession = inngest.createFunction(
   {
     id: "analyze-therapy-session",
-    triggers: [{ event: "therapy/session.created" }],
+    trigger: "therapy/session.created",
   },
   async ({ event, step }) => {
     try {
@@ -257,14 +256,14 @@ export const analyzeTherapySession = inngest.createFunction(
 //         async () => {
 //           const prompt = `Based on the following user context, generate personalized activity recommendations:
 //         User Context: ${JSON.stringify(userContext)}
-
+        
 //         Please provide:
 //         1. 3-5 personalized activity recommendations
 //         2. Reasoning for each recommendation
 //         3. Expected benefits
 //         4. Difficulty level
 //         5. Estimated duration
-
+        
 //         Format the response as a JSON object.`;
 
 //           const result = await genAI.models.generateContent({

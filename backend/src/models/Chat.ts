@@ -11,7 +11,7 @@ export interface IChatMessage{
     }
 }
 export interface IChatSession extends Document{
-    sessionId: string;
+    sessionId: string;  
     messages : IChatMessage[];
     createdAt: Date;
     updatedAt: Date;
