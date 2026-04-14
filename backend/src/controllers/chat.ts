@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { logger } from "../utils/logger";
 import { inngest } from "../inngest/index";
 import { User } from "../models/Users";
-import { InngestSessionResponse, InngestEvent } from "../types/inngest";
+import { InngestSessionResponse, InngestEvent } from "./client";
 import { Types } from "mongoose";
 import { Inngest } from "inngest";
 
