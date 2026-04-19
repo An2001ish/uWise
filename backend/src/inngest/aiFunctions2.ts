@@ -237,60 +237,60 @@ export const analyzeTherapySession = inngest.createFunction(
   },
 );
 
-// // Function to generate personalized activity recommendations
-// export const generateActivityRecommendations = inngest.createFunction(
-//   { id: "generate-activity-recommendations" },
-//   { event: "mood/updated" },
-//   async ({ event, step }) => {
-//     try {
-//       const userContext = await step.run("get-user-context", async () => {
-//         return {
-//           recentMoods: event.data.recentMoods,
-//           completedActivities: event.data.completedActivities,
-//           preferences: event.data.preferences,
-//         };
-//       });
+// Function to generate personalized activity recommendations
+export const generateActivityRecommendations = inngest.createFunction(
+  { id: "generate-activity-recommendations" },
+  { event: "mood/updated" },
+  async ({ event, step }) => {
+    try {
+      const userContext = await step.run("get-user-context", async () => {
+        return {
+          recentMoods: event.data.recentMoods,
+          completedActivities: event.data.completedActivities,
+          preferences: event.data.preferences,
+        };
+      });
 
-//       const recommendations = await step.run(
-//         "generate-recommendations",
-//         async () => {
-//           const prompt = `Based on the following user context, generate personalized activity recommendations:
-//         User Context: ${JSON.stringify(userContext)}
+      const recommendations = await step.run(
+        "generate-recommendations",
+        async () => {
+          const prompt = `Based on the following user context, generate personalized activity recommendations:
+        User Context: ${JSON.stringify(userContext)}
         
-//         Please provide:
-//         1. 3-5 personalized activity recommendations
-//         2. Reasoning for each recommendation
-//         3. Expected benefits
-//         4. Difficulty level
-//         5. Estimated duration
+        Please provide:
+        1. 3-5 personalized activity recommendations
+        2. Reasoning for each recommendation
+        3. Expected benefits
+        4. Difficulty level
+        5. Estimated duration
         
-//         Format the response as a JSON object.`;
+        Format the response as a JSON object.`;
 
-//           const result = await genAI.models.generateContent({
-//             model: "gemini-2.0-flash",
-//             contents: prompt,
-//           });
+          const result = await genAI.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: prompt,
+          });
 
-//           const text = result.text?.trim() || "{}";
-//           return JSON.parse(text);
-//         },
-//       );
+          const text = result.text?.trim() || "{}";
+          return JSON.parse(text);
+        },
+      );
 
-//       await step.run("store-recommendations", async () => {
-//         logger.info("Activity recommendations stored successfully");
-//         return recommendations;
-//       });
+      await step.run("store-recommendations", async () => {
+        logger.info("Activity recommendations stored successfully");
+        return recommendations;
+      });
 
-//       return {
-//         message: "Activity recommendations generated",
-//         recommendations,
-//       };
-//     } catch (error) {
-//       logger.error("Error generating activity recommendations:", error);
-//       throw error;
-//     }
-//   },
-// );
+      return {
+        message: "Activity recommendations generated",
+        recommendations,
+      };
+    } catch (error) {
+      logger.error("Error generating activity recommendations:", error);
+      throw error;
+    }
+  },
+);
 
 // Add the functions to the exported array
 export const functions = [
