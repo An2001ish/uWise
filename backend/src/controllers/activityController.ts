@@ -15,6 +15,7 @@ export const logActivity = async (
       return res.status(401).json({ message: "User not authenticated" });
     }
     const activity = new Activity({
+      userId,
       type,
       name,
       description,
