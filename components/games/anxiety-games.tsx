@@ -157,7 +157,7 @@ export const AnxietyGames = ({ onGamePlayed }: AnxietyGamesProps) => {
                         </p>
                         <div className="flex items-center gap-2 mt-3">
                           <Music2 className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-muted-foreg   round">
                             {game.duration}
                           </span>
                         </div>

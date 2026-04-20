@@ -20,6 +20,7 @@ import {
   Heart,
   MessageSquare,
   ArrowRight,
+  Loader2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -44,7 +45,7 @@ export default function DashboardPage() {
   const wellnessStats = [
     {
       title: "Mood Score",
-      value: "7/10",
+      value: "90%",
       icon: Brain,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
@@ -60,7 +61,7 @@ export default function DashboardPage() {
     },
     {
       title: "Therapy Sessions",
-      value: "3",
+      value: "3 sessions",
       icon: Heart,
       color: "text-rose-500",
       bgColor: "bg-rose-500/10",
@@ -68,7 +69,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Activities",
-      value: "5",
+      value: "80",
       icon: Activity,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
@@ -135,7 +136,7 @@ export default function DashboardPage() {
           </motion.div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <Card className="border-primary/10 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/10 to-transparent"></div>
@@ -161,7 +162,9 @@ export default function DashboardPage() {
                         "bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90",
                         "transition-all duration-200 group-hover:translate-y-[-2px]",
                       )}
-                      onClick={() => {handleStartTherapy()}}
+                      onClick={() => {
+                        handleStartTherapy();
+                      }}
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
@@ -229,12 +232,15 @@ export default function DashboardPage() {
 
             <Card className="border-primary/10">
               <CardHeader>
-                <div>
-                  <CardTitle>Today's Overview</CardTitle>
-                  <CardDescription>
-                    Your wellness metrics for {""}
-                    {format(new Date(), "MMMM d, yyyy")}
-                  </CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Today's Overview</CardTitle>
+                    <CardDescription>
+                      Your wellness metrics for {""}
+                      {format(new Date(), "MMMM d, yyyy")}
+                    </CardDescription>
+                    
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -253,13 +259,13 @@ export default function DashboardPage() {
                             className={cn("w-5 h-5", stat.color)}
                           ></stat.icon>
                           <p className="text-sm font-medium">{stat.title}</p>
+                        </div>
                           <p className="text-2xl font-bold mt-2">
                             {stat.value}
                           </p>
                           <p className="text-sm text-muted-foreground mt-1">
                             {stat.description}
                           </p>
-                        </div>
                       </div>
                     );
                   })}
@@ -267,7 +273,7 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
             <div className="lg:cols-span-3 space-y-6">
               <AnxietyGames />
             </div>
