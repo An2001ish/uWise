@@ -10,7 +10,7 @@ interface SignInButtonProps {
 export function SignInButton({className}: SignInButtonProps) {
     return (
         <Button asChild className={className}>
-            <Link href="/sign-in">Sign In</Link>
+            <Link href="/login">Sign In</Link>
         </Button>
     )
 }

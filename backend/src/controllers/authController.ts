@@ -93,7 +93,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer", "");
+    const token = req.header("Authorization")?.replace("Bearer ", "");
     if (token) {
       await Session.deleteOne({ token });
     }
