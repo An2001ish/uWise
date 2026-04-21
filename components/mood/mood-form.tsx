@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Loader2 } from "lucide-react";
-
+import { useSession } from "@/lib/contexts/session-context";
 import { useRouter } from "next/navigation";
 
 interface MoodFormProps {
@@ -15,6 +15,7 @@ export function MoodForm({ onSuccess }: MoodFormProps) {
   const [moodScore, setMoodScore] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { user, isAuthenticated, loading } = useSession();
 
   const emotions = [
     { value: 0, label: "😔", description: "Very Low" },
@@ -26,6 +27,53 @@ export function MoodForm({ onSuccess }: MoodFormProps) {
 
   const currentEmotion =
     emotions.find((em) => Math.abs(moodScore - em.value) < 15) || emotions[2];
+
+    const handleSubmit= async ()=>{
+      console.log("MoodForm: Starting submission");
+      console.log("MoodForm: Auth state:", { isAuthenticated, loading, user });
+      if (!isAuthenticated) {
+        alert("You must be logged in to save your mood");
+        router.push("/login");
+        return
+      }
+      try {
+        setIsLoading(true);
+        const token = localStorage.getItem("token");
+        console.log(
+          "MoodForm: Token from localStorage:",
+          token ? "exists" : "not found",
+        );
+
+        const response = await fetch("/api/mood", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ score: moodScore }),
+        });
+        
+        console.log("MoodForm: Response status:", response.status);
+        
+        if(!response.ok){
+          const error = await response.json();
+          console.error("MoodForm: Error response:", error)
+          throw new Error(error.error || "Failed to save mood");
+        }
+
+
+        const data = await response.json();
+        alert("Mood saved successfully!"); 
+        onSuccess?.();
+
+        }
+      catch (err: any) {
+       alert(err.message || "Failed to save mood");
+      }
+      finally{
+        setIsLoading(false);
+      }
+    }
 
   return (
     <div className="space-y-6 py-4">
@@ -42,22 +90,25 @@ export function MoodForm({ onSuccess }: MoodFormProps) {
             <div
               key={em.value}
               className={`cursor-pointer transition-opacity ${Math.abs(moodScore - em.value) < 15 ? "opacity-100" : "opacity-50"}`}
-              onClick={()=>setMoodScore(em.value)}
+              onClick={() => setMoodScore(em.value)}
             >
-                <div className="text-2xl">{em.label}</div>
+              <div className="text-2xl">{em.label}</div>
             </div>
           ))}
         </div>
         <Slider
           value={[moodScore]}
-          onValueChange={(value)=>setMoodScore(value[0])}
+          onValueChange={(value) => setMoodScore(value[0])}
           min={0}
           max={100}
           step={1}
-          className="py-4">
-        </Slider>
+          className="py-4"
+        ></Slider>
       </div>
-      <Button className="w-full">Save Mood</Button>
+      <Button className="w-full"
+      onClick={handleSubmit}
+      disabled = {isLoading || loading}
+      >{isLoading || loading ? "Saving...": "Save Mood"}</Button>
     </div>
   );
 }

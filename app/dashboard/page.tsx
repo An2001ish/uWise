@@ -35,14 +35,16 @@ import { AnxietyGames } from "@/components/games/anxiety-games";
 import { MoodForm } from "@/components/mood/mood-form";
 import { ActivityLogger } from "@/components/activities/activity-logger";
 import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/contexts/session-context";
 
 export default function DashboardPage() {
   const [currenttime, setCurrentTime] = useState<Date | null>(null);
   const [showMoodModal, setShowMoodModal] = useState(false);
   const [isSavingMood, setIsSavingMood] = useState(false);
   const [showActivityLogger, setShowActivityLogger] = useState(false);
+  const {user} = useSession();
 
-  const wellnessStats = [
+  const wellnessStats = [ 
     {
       title: "Mood Score",
       value: "90%",
@@ -91,7 +93,7 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleMoobSubmit = async ({ moodScore: number }) => {
+  const handleMoodSubmit = async ({ moodScore: number }) => {
     setIsSavingMood(true);
     try {
       setShowMoodModal(false);
@@ -120,7 +122,9 @@ export default function DashboardPage() {
             transition={{ duration: 0.6 }}
             className="flex flex-col gap-2"
           >
-            <h1 className="text-3xl font-bold">Welcome Back!</h1>
+            <h1 className="text-3xl font-bold">
+              Welcome Back, {user?.name.split(" ")[0]}!
+            </h1>
             <p className="text-muted-foreground text-sm">
               {currenttime
                 ? currenttime.toLocaleString("en-US", {
@@ -239,7 +243,6 @@ export default function DashboardPage() {
                       Your wellness metrics for {""}
                       {format(new Date(), "MMMM d, yyyy")}
                     </CardDescription>
-                    
                   </div>
                 </div>
               </CardHeader>
@@ -260,12 +263,10 @@ export default function DashboardPage() {
                           ></stat.icon>
                           <p className="text-sm font-medium">{stat.title}</p>
                         </div>
-                          <p className="text-2xl font-bold mt-2">
-                            {stat.value}
-                          </p>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            {stat.description}
-                          </p>
+                        <p className="text-2xl font-bold mt-2">{stat.value}</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {stat.description}
+                        </p>
                       </div>
                     );
                   })}
@@ -289,7 +290,7 @@ export default function DashboardPage() {
               </DialogDescription>
             </DialogTitle>
           </DialogHeader>
-          <MoodForm onSubmit={handleMoobSubmit} isLoading={isSavingMood} />
+          <MoodForm onSuccess={() => setShowMoodModal(false)} />
         </DialogContent>
       </Dialog>
 
