@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { logger } from "../utils/logger";
 import { inngest } from "../inngest/index";
 import { User } from "../models/Users";
-import { InngestSessionResponse, InngestEvent } from "../types/inngest";
+import { InngestEvent } from "../types/inngest";
 import { Types } from "mongoose";
 
 // Initialize Gemini API
@@ -108,7 +108,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     await inngest.send(event);
 
     // Process the message directly using Gemini
-    // const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    // const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
     // Analyze the message
     const analysisPrompt = `Analyze this therapy message and provide insights. Return ONLY a valid JSON object with no markdown formatting or additional text.
@@ -128,7 +128,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     }`;
 
     const analysisResult = await genAI.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-3-flash-preview",
       contents: analysisPrompt,
     });
 
@@ -157,12 +157,11 @@ export const sendMessage = async (req: Request, res: Response) => {
     5. Considers safety and well-being`;
 
     const responseResult = await genAI.models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-3-flash-preview",
       contents: responsePrompt,
     });
 
     const response = (responseResult.text || "").trim();
-    
 
     logger.info("Generated response:", response);
 
@@ -275,5 +274,41 @@ export const getChatHistory = async (req: Request, res: Response) => {
   } catch (error) {
     logger.error("Error fetching chat history:", error);
     res.status(500).json({ message: "Error fetching chat history" });
+  }
+};
+
+export const getAllChatSessions = async (req: Request, res: Response) => {
+  try {
+    const userId = new Types.ObjectId(req.user.id);
+
+    const sessions = await ChatSession.find({ userId })
+      .sort({ startTime: -1 }) // latest sessions first
+      .lean();
+
+    const formattedSessions = sessions.map((session) => ({
+      sessionId: session.sessionId,
+
+      // 👇 map startTime → createdAt for frontend
+      createdAt: session.startTime,
+      updatedAt:
+        session.messages.length > 0
+          ? session.messages[session.messages.length - 1].timestamp
+          : session.startTime,
+
+      // 👇 ensure messages format matches frontend
+      messages: (session.messages || []).map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+        timestamp: msg.timestamp,
+        metadata: msg.metadata || {},
+      })),
+    }));
+
+    res.json(formattedSessions);
+  } catch (error) {
+    logger.error("Error fetching chat sessions:", error);
+    res.status(500).json({
+      message: "Error fetching chat sessions",
+    });
   }
 };

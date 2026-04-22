@@ -4,7 +4,8 @@ import { logger } from "../utils/logger";
 
 const genAI = new GoogleGenAI({
   apiKey:
-    process.env.GEMINI_API_KEY || "AIzaSyCV2PkGsprMRM2mr3in3IFDgPbLhtjesH8",
+    process.env.GEMINI_API_KEY ||
+    "AQ.Ab8RN6K1z1Y1Iy9OSTqZa4N_gXOq65guYLtGviyzMjHnRdlpew",
 });
 
 export const processChatMessage = inngest.createFunction(
@@ -54,7 +55,7 @@ export const processChatMessage = inngest.createFunction(
           }`;
 
           const result = await genAI.models.generateContent({
-            model: "gemini-2.0-flash",
+            model: "gemini-3-flash-preview",
             contents: prompt,
           });
 
@@ -128,7 +129,7 @@ export const processChatMessage = inngest.createFunction(
           5. Considers safety and well-being`;
 
           const result = await genAI.models.generateContent({
-            model: "gemini-2.0-flash",
+            model: "gemini-3-flash-preview",
             contents: prompt,
           });
 
@@ -198,7 +199,7 @@ export const analyzeTherapySession = inngest.createFunction(
         Format the response as a JSON object.`;
 
         const result = await genAI.models.generateContent({
-          model: "gemini-2.0-flash",
+          model: "gemini-3-flash-preview",
           contents: prompt,
         });
 
@@ -268,7 +269,7 @@ export const analyzeTherapySession = inngest.createFunction(
 //         Format the response as a JSON object.`;
 
 //           const result = await genAI.models.generateContent({
-//             model: "gemini-2.0-flash",
+//             model: "gemini-3-flash-preview",
 //             contents: prompt,
 //           });
 

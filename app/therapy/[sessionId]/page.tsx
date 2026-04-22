@@ -270,7 +270,6 @@ export default function TherapyPage() {
   return (
     <div className="relative max-w-7xl mx-auto px-4">
       <div className="flex h-[calc(100vh-4rem)] mt-20 gap-6">
-
         {/* Sidebar */}
         <div className="w-80 flex flex-col border-r bg-muted/30">
           <div className="p-4 border-b">
@@ -353,7 +352,6 @@ export default function TherapyPage() {
             </div>
           </ScrollArea>
         </div>
-
 
         <div className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-background rounded-lg border">
           <div className="flex items-center gap-2">
@@ -467,7 +465,7 @@ export default function TherapyPage() {
                     </div>
                   </motion.div>
                 )}
-                <div>ref={messagesEndRef}</div>
+                <div ref={messagesEndRef}></div>
               </div>
             </div>
           )}
@@ -518,6 +516,10 @@ export default function TherapyPage() {
                     "group-hover:scale-105",
                   )}
                   disabled={isTyping || isChatPaused || !message.trim()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }}
                 >
                   <Send className="w-4 h-4"></Send>
                 </Button>
