@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      <section className="relative min-h-[90vh] mt-20 flex flex-col items-center justify-center py-12 px-4">
+      <section className="relative min-h-[90vh] mt-15 flex flex-col items-center justify-center py-12 px-4">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div
             className={`absolute w-[500px] h-[500px] rounded-full blur-3xl top-0 -left-20 transition-all duration-700 ease-in-out bg-gradient-to-r ${currentEmotion?.color} to-transparent opacity-60`}

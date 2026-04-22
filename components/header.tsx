@@ -26,9 +26,12 @@ export function Header() {
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <AudioWaveform className="h-7 w-7 text-primary animate-pulse-gentle" />
-              <div>
-                <span className="text-lg font-semibold bg-gradient-to-r from-primary to-primary/80 text-transparent bg-clip-text">
+              <div className="flex flex-col">
+                <span className="font-semibold text-lg bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
                   uWise
+                </span>
+                <span className="text-xs dark:text-muted-foreground">
+                  Your mental health Companion{" "}
                 </span>
               </div>
             </Link>

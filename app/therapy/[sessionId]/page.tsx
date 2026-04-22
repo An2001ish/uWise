@@ -18,6 +18,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDistanceToNow } from "date-fns";
 
+
 const glowAnimation = {
   initial: { opacity: 0.5, scale: 1 },
   animate: {
@@ -31,6 +32,8 @@ const glowAnimation = {
   },
 };
 
+
+
 export default function TherapyPage() {
   
   const params = useParams();
@@ -42,6 +45,7 @@ export default function TherapyPage() {
   const [isChatPaused, setIsChatPaused] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(params.sessionId as string);
   const [sessions, setSessions] = useState<ChatSession[]>([]);
+  const hasInitialized = useRef(false);
 
   const handleNewSession = async () =>{
     try {
@@ -54,6 +58,8 @@ export default function TherapyPage() {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
+
+      console.log("session created from handlenewsessions");
 
       setSessions((prev)=>[newSession, ...prev]);
       setSessionId(newSessionId);
@@ -70,12 +76,16 @@ export default function TherapyPage() {
   }
 
   useEffect(() => {
+    if (hasInitialized.current) return;
     const initChat = async () => {
+        hasInitialized.current = true;
      try {
        setIsLoading(true);
        if (!sessionId || sessionId === "new") {
          console.log("Creating new chat session...");
+         console.log("CALLING createChatSession");
          const newSessionId = await createChatSession();
+         console.log("session created from initchat");
          console.log("New session created:", newSessionId);
          setSessionId(newSessionId);
          window.history.pushState({}, "", `/therapy/${newSessionId}`);
@@ -115,7 +125,7 @@ export default function TherapyPage() {
      }
     }
     initChat();
-  }, [sessionId]);
+  }, []);
 
   useEffect(() => {
     const loadSessions = async () => {

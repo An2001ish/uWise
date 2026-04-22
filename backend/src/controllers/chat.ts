@@ -13,6 +13,7 @@ const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // Create a new chat session
 export const createChatSession = async (req: Request, res: Response) => {
+  console.log("BACKEND: creating session");
   try {
     // Check if user is authenticated
     if (!req.user || !req.user.id) {

@@ -54,6 +54,7 @@ const getAuthHeaders = () => {
 export const createChatSession = async (): Promise<string> => {
   try {
     console.log("Creating new chat session...");
+    console.log("API HIT: createChatSession");
     const response = await fetch(`${API_BASE}/chat/sessions`, {
       method: "POST",
       headers: getAuthHeaders(),
