@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const BACKEND_API_URL =
-    process.env.BACKEND_API_URL;
+  process.env.BACKEND_API_URL || "https://u-wise.vercel.app";
     //  || "http://localhost:3001";
 
 export async function GET(

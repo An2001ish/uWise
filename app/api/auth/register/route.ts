@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest){
     const body = await request.json();
-    const API_URL = process.env.BACKEND_API_URL;
+    const API_URL = process.env.BACKEND_API_URL || "https://u-wise.vercel.app";
     // || "http://localhost:3001";
 
     try {

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const API_URL =
-    process.env.BACKEND_API_URL;
+  const API_URL = process.env.BACKEND_API_URL || "https://u-wise.vercel.app";
     // || "http://localhost:3001";
   const token = req.headers.get("Authorization");
 

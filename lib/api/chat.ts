@@ -40,7 +40,7 @@ export interface ApiResponse {
   };
 }
 
-const API_BASE = process.env.BACKEND_API_URL;
+const API_BASE = process.env.BACKEND_API_URL || "https://u-wise.vercel.app";
 // || "http://localhost:3001";
 
 // Helper function to get auth headers
