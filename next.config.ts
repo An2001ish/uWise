@@ -9,11 +9,7 @@ const nextConfig: NextConfig = {
       '@': path.resolve(__dirname, './'),
     };
     return config;
-  },
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  }
 };
 
 export default nextConfig;
