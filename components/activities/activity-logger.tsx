@@ -20,10 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
 import { useSession } from "@/lib/contexts/session-context";
 import { logActivity } from "@/lib/api/activity";
-import { div } from "framer-motion/client";
 
 const activityTypes = [
   { id: "meditation", name: "Meditation" },
@@ -37,33 +35,58 @@ const activityTypes = [
 interface ActivityLoggerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  // onActivityLogged: () => void;
 }
 
-export function ActivityLogger({ open, onOpenChange }: ActivityLoggerProps) {
+export function ActivityLogger({
+  open,
+  onOpenChange,
+  // onActivityLogged,
+}: ActivityLoggerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
+  const { user, isAuthenticated, loading } = useSession();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    setTimeout(() => {
-      console.log({
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      alert("You must be logged in to log activities");
+      return;
+    }
+
+    if (!type || !name) {
+      alert("Please select an activity type and enter a name.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await logActivity({
         type,
         name,
-        duration,
         description,
+        duration: duration ? parseInt(duration) : undefined,
       });
 
+      // Reset form
       setType("");
       setName("");
       setDuration("");
       setDescription("");
-      setIsLoading(false);
 
-      alert("Activity logged (mock)!");
+      alert("Activity logged successfully!");
+
+      // onActivityLogged();
       onOpenChange(false);
-    }, 1000);
+    } catch (error) {
+      console.error("Error logging activity:", error);
+      alert("Failed to log activity. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -73,12 +96,12 @@ export function ActivityLogger({ open, onOpenChange }: ActivityLoggerProps) {
           <DialogTitle>Log Activity</DialogTitle>
           <DialogDescription>Record your wellness activity</DialogDescription>
         </DialogHeader>
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label>Activity Type</Label>
             <Select value={type} onValueChange={setType}>
               <SelectTrigger>
-                <SelectValue placeholder="Select activity type"></SelectValue>
+                <SelectValue placeholder="Select activity type" />
               </SelectTrigger>
               <SelectContent>
                 {activityTypes.map((type) => (
@@ -89,6 +112,7 @@ export function ActivityLogger({ open, onOpenChange }: ActivityLoggerProps) {
               </SelectContent>
             </Select>
           </div>
+
           <div className="space-y-2">
             <Label>Name</Label>
             <Input
@@ -97,6 +121,7 @@ export function ActivityLogger({ open, onOpenChange }: ActivityLoggerProps) {
               placeholder="Morning Meditation, Evening Walk, etc."
             />
           </div>
+
           <div className="space-y-2">
             <Label>Duration (minutes)</Label>
             <Input
@@ -106,18 +131,35 @@ export function ActivityLogger({ open, onOpenChange }: ActivityLoggerProps) {
               placeholder="15"
             />
           </div>
+
           <div className="space-y-2">
-            <Label>Description</Label>
+            <Label>Description (optional)</Label>
             <Input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe your activity here..."
+              placeholder="How did it go?"
             />
           </div>
-          <div className="flex justify-end space-x-2">
-            <Button type="button" variant="ghost">Cancel</Button>
-            <Button type="submit" disabled>
-              Save Activity
+
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isLoading || loading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : loading ? (
+                "Loading..."
+              ) : (
+                "Save Activity"
+              )}
             </Button>
           </div>
         </form>

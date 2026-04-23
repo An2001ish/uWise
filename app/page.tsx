@@ -2,6 +2,7 @@
 
 import { Ripple } from "@/components/magicui/ripple";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -14,6 +15,8 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Features } from "@/components/sections/Features";
+import { About } from "@/components/sections/About";
 
 export default function Home() {
   const emotions = [
@@ -174,17 +177,19 @@ export default function Home() {
               size="lg"
               className="relative gropu h-12 px-8 rounded-full bg-gradient-to-r from-primary via-primary/90 to-secondary hover:to-primary shadow-lg shadow-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/30"
             >
+              <Link href="/dashboard">
               <span className="relative z-10 font-medium flex items-center gap-2">
                 Get Started
                 <ArrowRight className="w-4 h-4 group-hover:transition-transform duration-300" />
               </span>
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
       </section>
 
       {/* features */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section className="relative py-15 px-4 overflow-hidden">
         <div className="max-w-6xl mx-auto"></div>
         <motion.div className="text-center mb-16 space-y-4 text-white">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-primary/90 to-primary bg-clip-text text-transparent dark:test-primary/90">
@@ -195,7 +200,7 @@ export default function Home() {
             well-being.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 relative px-34">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -229,6 +234,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <Features />
+      <About />
     </div>
   );
 }

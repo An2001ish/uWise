@@ -1,6 +1,6 @@
 'use client';
 
-import { AudioWaveform, X, Menu, LogOut, MessageCircle } from "lucide-react"
+import { AudioWaveform, X, Menu, LogOut, MessageCircle, House, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "./theme-toggle"
 import { SignInButton } from "./auth/sign-in-button"
@@ -11,9 +11,9 @@ import {Button} from "@/components/ui/button"
 export function Header() {
 
     const navItems = [
-        {label: "Features", href: "/features"},
-        {label: "About uWise", href: "/about"},
-    ]
+      { label: "Features", href: "/#features" },
+      { label: "About uWise", href: "/#about" },
+    ];
 
     const {isAuthenticated, logout, user} =useSession();
     console.log("isAuthenticated: ",isAuthenticated)
@@ -63,8 +63,10 @@ export function Header() {
                       className="hidden md:flex gap-2 bg-primary/90 hover:bg-primary"
                     >
                       <Link href="/dashboard">
-                        <MessageCircle className="w-4 h-4 mr-1" />
-                        Start Chat
+                        {/* <MessageCircle className="w-4 h-4 mr-1" />
+                        Start Chat */}
+                        <LayoutDashboard className="w-4 h-4" />
+                        Dashboard
                       </Link>
                     </Button>
                     <Button

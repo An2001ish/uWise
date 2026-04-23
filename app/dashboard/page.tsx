@@ -123,7 +123,7 @@ export default function DashboardPage() {
             className="flex flex-col gap-2"
           >
             <h1 className="text-3xl font-bold">
-              Welcome Back, {user?.name.split(" ")[0]}!
+              Welcome, {user?.name.split(" ")[0]}!
             </h1>
             <p className="text-muted-foreground text-sm">
               {currenttime
