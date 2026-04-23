@@ -721,3 +721,24 @@
 {"level":"info","message":"Generated response:","timestamp":"2026-04-23T05:47:56.124Z"}
 {"level":"info","message":"Session updated successfully:","sessionId":"5eb8ee56-4b79-4205-8dc4-aa0806f2544a","timestamp":"2026-04-23T05:47:56.186Z"}
 {"level":"info","message":"Generated response:","responseText":"It’s wonderful that you’re interested in exploring meditation. Taking this proactive step toward self-regulation and mindfulness is a great way to support your mental well-being.\n\nMeditation is essentially a practice of training your attention and returning to the present moment without judgment. It’s a skill, much like a muscle that gets stronger with practice.\n\nHere is a simple, evidence-based way to start with a **Basic Mindfulness Meditation**:\n\n1.  **Find a Quiet Space:** Sit in a comfortable chair or on the floor with your back relatively straight but not rigid. Place your hands resting gently in your lap or on your knees.\n2.  **Set a Time Limit:** If you’re just starting, even 3 to 5 minutes can be very effective. \n3.  **Notice Your Breath:** Close your eyes or soften your gaze toward the floor. Bring your attention to the physical sensation of breathing. Feel the air moving through your nose or mouth, the rising of your chest, or the expansion of your belly.\n4.  **Observe When Your Mind Wanders:** This is the most important part—your mind *will* wander to thoughts about the past, the future, or your \"to-do\" list. This is completely normal and not a failure.\n5.  **Gently Return:** When you notice your mind has wandered, simply acknowledge the thought without judging yourself, and gently guide your focus back to your breath. \n6.  **Close with Kindness:** When your timer goes off, slowly open your eyes and take a moment to notice how your body feels before moving on with your day.\n\n**Why this helps:** \nBy practicing this, you are teaching your brain how to pause before reacting to stressors. It helps lower the \"noise\" of intrusive thoughts and grounds you in the \"here and now.\"\n\nHow does the idea of trying a five-minute session today feel to you? We can also discuss any specific challenges you think might come up as you try it.","timestamp":"2026-04-23T05:47:57.256Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T07:15:14.750Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T07:15:14.760Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T07:15:14.761Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T07:18:03.381Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T07:18:03.391Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T07:18:03.392Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T10:05:42.148Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T10:05:42.160Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T10:05:42.161Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T10:17:25.585Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T10:17:25.590Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T10:17:25.591Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T10:22:02.140Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T10:22:02.149Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T10:22:02.150Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T10:22:35.746Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T10:22:35.750Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T10:22:35.750Z"}
+{"level":"info","message":"Connected to MongoDB Atlas.","timestamp":"2026-04-23T10:23:10.068Z"}
+{"level":"info","message":"Server is running on port 3001","timestamp":"2026-04-23T10:23:10.074Z"}
+{"level":"info","message":"Inngest endpoint available at http://localhost:3001/api/inngest","timestamp":"2026-04-23T10:23:10.074Z"}
