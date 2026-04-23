@@ -3,12 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { sessionId: string } },
-) {
+export async function GET(req: NextRequest, context: any) {
   try {
-    const { sessionId } = params;
+    const sessionId = context.params.sessionId;
     const response = await fetch(
       `${BACKEND_API_URL}/api/auth/chat/session/${sessionId}/history`,
     );
@@ -30,10 +27,10 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } },
+  context: any,
 ) {
   try {
-    const { sessionId } = params;
+    const sessionId = context.params.sessionId;
     const { message } = await req.json();
 
     if (!message) {

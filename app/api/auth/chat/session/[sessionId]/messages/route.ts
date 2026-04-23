@@ -4,10 +4,10 @@ const BACKEND_API_URL = process.env.BACKEND_API_URL || "http://localhost:3001";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } },
+  context: any,
 ) {
   try {
-    const { sessionId } = params;
+    const sessionId = context.params.sessionId;
     const body = await req.json();
     const { message } = body;
 
