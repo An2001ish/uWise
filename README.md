@@ -1,1 +1,1 @@
-A mental health companion app created using next.js and node.js
+A mental health companion app created using Next.js and Node.js
