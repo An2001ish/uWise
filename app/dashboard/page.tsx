@@ -93,7 +93,7 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleMoodSubmit = async ({ moodScore: number }) => {
+  const handleMoodSubmit = async ({ moodScore }: { moodScore: number }) => {
     setIsSavingMood(true);
     try {
       setShowMoodModal(false);
