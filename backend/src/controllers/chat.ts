@@ -108,9 +108,6 @@ export const sendMessage = async (req: Request, res: Response) => {
     // Send event to Inngest for logging and analytics
     await inngest.send(event);
 
-    // Process the message directly using Gemini
-    // const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
-
     // Analyze the message
     const analysisPrompt = `Analyze this therapy message and provide insights. Return ONLY a valid JSON object with no markdown formatting or additional text.
     Message: ${message}
